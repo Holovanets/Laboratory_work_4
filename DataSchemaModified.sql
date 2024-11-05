@@ -27,7 +27,7 @@ CREATE TABLE psychological_state (
     -- Унікальний ідентифікатор психологічного стану
     name VARCHAR(255) NOT NULL UNIQUE, -- Назва психологічного стану
     description VARCHAR(500), -- Опис емоційного стану
-    user_id INT REFERENCES users (user_id)
+    user_id INT REFERENCES NonExistentTable(user_id)
     ON DELETE CASCADE -- Посилання на користувача
 );
 
@@ -68,15 +68,3 @@ CREATE TABLE social_support (
 ALTER TABLE users ADD CONSTRAINT check_preferences CHECK (preferences <> '');
 ALTER TABLE users ADD CONSTRAINT check_therapy_results CHECK
 (therapy_results IS NULL OR LENGTH(therapy_results) <= 500);
-
--- Обмеження на вміст атрибутів таблиці psychological_state
-ALTER TABLE psychological_state ADD CONSTRAINT check_description
-CHECK (description IS NULL OR LENGTH(description) <= 500);
-
--- Обмеження на вміст атрибутів таблиці recommended_literature
-ALTER TABLE recommended_literature
-ADD CONSTRAINT check_genre CHECK (genre <> '');
-
--- Обмеження на вміст атрибутів таблиці social_support
-ALTER TABLE social_support ADD CONSTRAINT check_support_type
-CHECK (support_type <> '');
